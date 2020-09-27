@@ -305,7 +305,9 @@ RUN \
         --extra-libs=-ldl \
         --prefix="${PREFIX}" \
         --enable-nvenc \
+        --enable-nvdec \
         --enable-cuda \
+        --enable-ffnvcodec \
         --enable-libnpp && \
         make && \
         make install && \
