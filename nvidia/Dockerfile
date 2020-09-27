@@ -5,9 +5,6 @@
 # I've added the pieces needed by Don Melton's `other-transcode` script:
 # https://github.com/donmelton/other_video_transcoding
 #
-# I've included the MKVToolNix AppImage file because FossHub is hostile towards
-# non-browser based downloading.
-#
 
 FROM    nvidia/cuda:11.0-devel-ubuntu20.04 AS devel-base
 
