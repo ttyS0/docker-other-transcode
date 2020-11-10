@@ -1,6 +1,6 @@
 # Docker container for Don Melton's Other-Transcode Tool
 
-The `other-transcode` tool leverages `ffmpeg`, and by default tries to take advantage of hardware accelerated encoding. Since the different hardware dependencies are of varying levels of size and complexity, I've broken them up into three image types, `nvidia`, `vaapi`, `qsv`, and `sw`.
+The `other-transcode` tool leverages `ffmpeg`, and by default tries to take advantage of hardware accelerated encoding. Since the different hardware dependencies are of varying levels of size and complexity, I've broken them up into three image types, `nvidia`, `qsv`, and `sw`.
 
 ## NVidia
 
@@ -14,17 +14,19 @@ This image builds `ffmpeg` with NVidia & CUDA libraries, and should be used on s
 
 * The [NVidia Container Toolkit](https://github.com/NVIDIA/nvidia-docker) must be installed. It's very important to restart the Docker daemon after installation as it updates the Docker configuration.
 
-## VAAPI
-
-This image builds `ffmpeg` with the `VA-API` system to access hardware encoding exposed via the DRI mechanism. This is the easiest way to access Intel QSV, though it does suffer from a lack of encoder acceleration coverage. Most notably HEVC does not work correctly with the `VAAPI` system.
 
 ## QSV
 
-This image builds `ffmpeg` with the Intel Media SDK to provide direct use of Intel's QSV system. While more feature complete it is non-trivial to build and may as a result be buggier than `VAAPI`.
+This image builds `ffmpeg` with the [Intel Media SDK](https://github.com/Intel-Media-SDK/MediaSDK) to provide direct use of Intel's QSV system. That combined with VAAPI provides a high quality and performant transcode. Performance is very dependent on both clock speed and iGPU variant.
+
+### Requirements
+
+* The [i915](https://01.org/linuxgraphics/gfx-docs/drm/gpu/i915.html) kernel module must be loaded
+* `/dev/dri` devices must be available.
 
 ## SW
 
-This image is for only using software encoding via `ffmpeg`. It is also the only image that attempts to provide both an Intel (`amd64`) and ARM (`arm64`) image.
+This image is for only using software encoding via `ffmpeg`. It is also the only image that attempts to provide both an Intel (`amd64`) and ARM (`arm64`) image, as there are no hardware dependencies.
 
 # Prebuilt Images
 
@@ -35,7 +37,6 @@ The base image version exactly tracks the `other-transcode` version. The `{versi
 While images get pushed automatically to Docker Hub, it's possible they will be unavailable due to limitations of Docker Hub free accounts. Alternatively, they are also available from my self hosted Harbor instance.
 
 * ttys0/other-transcode:nvidia-{version}
-* ttys0/other-transcode:vaapi-{version}
 * ttys0/other-transcode:qsv-{version}
 * ttys0/other-transcode:sw-{version}
 
@@ -45,7 +46,6 @@ While images get pushed automatically to Docker Hub, it's possible they will be 
 These images are served from a self-hosted Harbor instance running in my Home Lab environment. As such, availability is subject to the vagaries of my internet connection and the health of my Home Lab.
 
 * hub.skj.dev/img/other-transcode:nvidia-{version}
-* hub.skj.dev/img/other-transcode:vaapi-{version}
 * hub.skj.dev/img/other-transcode:qsv-{version}
 * hub.skj.dev.img/other-transcode:sw-{version}
 
@@ -64,22 +64,17 @@ Using that setup, to transcode `source_file.mkv` with the default H264 encoding,
 ```
 # Software Encoding H.264
 docker run --rm -v $(pwd):$(pwd) -w $(pwd) \ 
-  hub.skj.dev/other-transcode:sw-0.3.2 --x264-avbr --target=5000 \
-  src/source_file.mkv
-
-# NVidia Encoding H.264
-docker run --rm --gpus all -v $(pwd):$(pwd) -w $(pwd) \ 
-  hub.skj.dev/other-transcode:nvidia-0.3.2 \
-  src/source_file.mkv
-
-# NVidia Encoding HEVC (non-Turing card)
-docker run --rm --gpus all -v $(pwd):$(pwd) -w $(pwd) \ 
-  hub.skj.dev/other-transcode:nvidia-0.3.2 --hevc \
+  hub.skj.dev/img/other-transcode:sw-0.4.0 --x264-avbr --target 1080p=5000 \
   src/source_file.mkv
   
-# NVidia Encoding HEVC (Turing card)
+# QSV Encoding H.264
+docker run --rm --device /dev/dri:/dev/dri -v $(pwd):$(pwd) -w $(pwd) \
+  hub.skj.dev/img/other-transcode:qsv-0.4.0 --target 1080p=6000 \
+  src/source_file.mkv
+
+# NVidia Encoding HEVC
 docker run --rm --gpus all -v $(pwd):$(pwd) -w $(pwd) \ 
-  hub.skj.dev/other-transcode:nvidia-0.3.2 --hevc --nvenc-temporal-aq \
+  hub.skj.dev/img/other-transcode:nvidia-0.4.0 --hevc \
   src/source_file.mkv
 ```
 
