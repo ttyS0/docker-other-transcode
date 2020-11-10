@@ -1,10 +1,11 @@
-FROM        alpine:3.12.1 AS runtime
+FROM    ubuntu:focal AS runtime
 
-RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat mpv ruby-full mkvtoolnix
+RUN     apt-get -yqq update && \
+        apt-get install -yq --no-install-recommends ca-certificates expat libgomp1 mpv ruby-full mkvtoolnix intel-media-va-driver-non-free libmfx1 libmfx-tools libva-drm2 libigfxcmrt7 && \
+        apt-get autoremove -y && \
+        apt-get clean -y
 
-FROM        alpine:3.12.1 AS build
-
-RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat git
+FROM        ubuntu:focal AS build
 
 WORKDIR     /tmp/workdir
 
@@ -23,7 +24,8 @@ ENV         FFMPEG_VERSION=4.3.1 \
             LIBXML2_VERSION=2.9.10 \
             LIBBLURAY_VERSION=1.1.2 \
             OTHER_TRANSCODE_VERSION=0.4.0 \
-            SRC=/usr/local
+            SRC=/usr/local \
+            LIBVA_DRIVER_NAME=iHD
 
 
 ARG         LD_LIBRARY_PATH=/opt/ffmpeg/lib
@@ -39,23 +41,35 @@ RUN     buildDeps="autoconf \
                    binutils \
                    bzip2 \
                    cmake \
+                   ca-certificates \
                    curl \
                    coreutils \
                    diffutils \
                    file \
                    g++ \
                    gcc \
+                   git \
                    gperf \
                    libtool \
                    make \
                    python3 \
-                   openssl-dev \
+                   pkg-config \
+                   libssl-dev \
                    tar \
+                   xz-utils \
                    yasm \
                    nasm \
-                   zlib-dev \
-                   expat-dev" && \
-        apk add --no-cache --update ${buildDeps}
+                   zlib1g-dev \
+                   libexpat1-dev \
+                   libmfx1 \
+                   libmfx-dev \
+                   libmfx-tools \
+                   libva-drm2 \
+                   libsdl2-dev \
+                   libva-dev \
+                   libigfxcmrt-dev" && \
+        apt-get -yqq update && \
+        DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${buildDeps}
 
 ## x264 http://www.videolan.org/developers/x264.html
 RUN \
@@ -224,6 +238,7 @@ RUN \
 ## ffmpeg https://ffmpeg.org/
 RUN  \
         DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
+        #git clone https://git.ffmpeg.org/ffmpeg.git .
         curl -sLO https://ffmpeg.org/releases/ffmpeg-${FFMPEG_VERSION}.tar.bz2 && \
         tar -jx --strip-components=1 -f ffmpeg-${FFMPEG_VERSION}.tar.bz2
 
@@ -255,7 +270,9 @@ RUN \
         --extra-libs=-ldl \
         --prefix="${PREFIX}" \
         --enable-libkvazaar \
-        --enable-libaom \
+        --enable-libmfx \
+        --enable-vaapi \
+        --enable-sdl \
         --extra-libs=-lpthread \
         --extra-cflags="-I${PREFIX}/include" \
         --extra-ldflags="-L${PREFIX}/lib" && \
@@ -290,7 +307,8 @@ RUN \
 FROM        runtime AS release
 MAINTAINER  Sean Johnson <sean@ttys0.net>
 
-ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
+ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64 \
+            LIBVA_DRIVER_NAME="iHD"
 
 CMD         ["--help"]
 ENTRYPOINT  ["/usr/local/bin/other-transcode"]

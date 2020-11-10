@@ -35,17 +35,16 @@ ENV         FFMPEG_VERSION=4.3.1 \
             FDKAAC_VERSION=2.0.1 \
             FONTCONFIG_VERSION=2.12.4 \
             FREETYPE_VERSION=2.5.5 \
-            FRIBIDI_VERSION=0.19.7 \
+            FRIBIDI_VERSION=1.0.10 \
             KVAZAAR_VERSION=2.0.0 \
             LAME_VERSION=3.100 \
             LIBASS_VERSION=0.14.0 \
             LIBPTHREAD_STUBS_VERSION=0.4 \
             LIBVIDSTAB_VERSION=1.1.0 \
-            OPENCOREAMR_VERSION=0.1.5 \
             X265_VERSION=3.2.1 \
             LIBXML2_VERSION=2.9.10 \
             LIBBLURAY_VERSION=1.1.2 \
-            OTHER_TRANSCODE_VERSION=0.3.2 \
+            OTHER_TRANSCODE_VERSION=0.4.0 \
             SRC=/usr/local
 
 ARG         MAKEFLAGS="-j2"
@@ -85,24 +84,12 @@ RUN \
         make install PREFIX="${PREFIX}" && \
         rm -rf ${DIR}
 
-## opencore-amr https://sourceforge.net/projects/opencore-amr/
-RUN \
-        DIR=/tmp/opencore-amr && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sL https://versaweb.dl.sourceforge.net/project/opencore-amr/opencore-amr/opencore-amr-${OPENCOREAMR_VERSION}.tar.gz | \
-        tar -zx --strip-components=1 && \
-        ./configure --prefix="${PREFIX}" --enable-shared  && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
 ## x264 http://www.videolan.org/developers/x264.html
 RUN \
         DIR=/tmp/x264 && \
         mkdir -p ${DIR} && \
         cd ${DIR} && \
-        curl -sL https://code.videolan.org/videolan/x264/-/archive/master/x264-master.tar.bz2 | \
-        tar -jx --strip-components=1 && \
+        git clone https://code.videolan.org/videolan/x264.git . && \
         ./configure --prefix="${PREFIX}" --enable-shared --enable-pic --disable-cli && \
         make && \
         make install && \
@@ -171,10 +158,9 @@ RUN  \
         DIR=/tmp/fribidi && \
         mkdir -p ${DIR} && \
         cd ${DIR} && \
-        curl -sLO https://github.com/fribidi/fribidi/archive/${FRIBIDI_VERSION}.tar.gz && \
-        tar -zx --strip-components=1 -f ${FRIBIDI_VERSION}.tar.gz && \
-        sed -i 's/^SUBDIRS =.*/SUBDIRS=gen.tab charset lib/' Makefile.am && \
-        ./bootstrap --no-config && \
+        curl -sLO https://github.com/fribidi/fribidi/releases/download/v${FRIBIDI_VERSION}/fribidi-${FRIBIDI_VERSION}.tar.xz && \
+        tar -x --strip-components=1 -f fribidi-${FRIBIDI_VERSION}.tar.xz && \
+        ./autogen.sh && \
         ./configure -prefix="${PREFIX}" --disable-static --enable-shared && \
         make -j 1 && \
         make install && \
@@ -277,8 +263,6 @@ RUN \
         --disable-ffplay \
         --enable-shared \
         --enable-avresample \
-        --enable-libopencore-amrnb \
-        --enable-libopencore-amrwb \
         --enable-gpl \
         --enable-libass \
         --enable-fontconfig \
