@@ -15,7 +15,7 @@ RUN   runDeps="ca-certificates \
                libfontconfig1" && \
         apt-get -yqq update && \
         DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${runDeps} && \
-        apt-get autoremove -y && \
+        apt-get upgrade -y && \
         apt-get clean -y
 
 FROM        ubuntu:focal AS build
@@ -24,7 +24,7 @@ WORKDIR     /tmp/workdir
 
 ENV         FFMPEG_VERSION=4.3.1 \
             FDKAAC_VERSION=2.0.1 \
-            OTHER_TRANSCODE_VERSION=0.4.0 \
+            OTHER_TRANSCODE_VERSION=0.5.0 \
             SRC=/usr/local \
             LIBVA_DRIVER_NAME=iHD
 
@@ -147,11 +147,9 @@ RUN \
     done
 
 ## other-transcode https://github.com/donmelton/other_video_transcoding
-#RUN \
-#        curl -sLO https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
-#        mv other-transcode /usr/local/bin/other-transcode && \
-RUN   curl -o /usr/local/bin/other-transcode -sL https://raw.githubusercontent.com/donmelton/other_video_transcoding/master/bin/other-transcode && \
-      chmod a+x /usr/local/bin/other-transcode
+RUN \
+        curl -o /usr/local/bin/other-transcode -sL https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
+        chmod a+x /usr/local/bin/other-transcode
 
 ### Release Stage
 FROM        runtime AS release
