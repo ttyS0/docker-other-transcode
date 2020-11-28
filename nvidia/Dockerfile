@@ -35,11 +35,16 @@ RUN   runDeps="ca-certificates \
                libass9 \
                libfreetype6 \
                libfribidi0 \
+               locales \
                libfontconfig1" && \
         apt-get -yqq update && \
         DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${runDeps} && \
         apt-get upgrade -y && \
         apt-get clean -y
+
+RUN     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+        dpkg-reconfigure --frontend=noninteractive locales && \
+        update-locale LANG=en_US.UTF-8
 
 FROM devel-base as build
 

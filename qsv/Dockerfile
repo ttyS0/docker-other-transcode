@@ -12,11 +12,16 @@ RUN   runDeps="ca-certificates \
                libass9 \
                libfreetype6 \
                libfribidi0 \
+               locales \
                libfontconfig1" && \
         apt-get -yqq update && \
         DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${runDeps} && \
         apt-get upgrade -y && \
         apt-get clean -y
+
+RUN   sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
+      dpkg-reconfigure --frontend=noninteractive locales && \
+      update-locale LANG=en_US.UTF-8
 
 FROM        ubuntu:focal AS build
 
@@ -156,7 +161,8 @@ FROM        runtime AS release
 MAINTAINER  Sean Johnson <sean@ttys0.net>
 
 ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64 \
-            LIBVA_DRIVER_NAME="iHD"
+            LIBVA_DRIVER_NAME="iHD" \
+            LANG=en_US.UTF-8
 
 CMD         ["--help"]
 ENTRYPOINT  ["/usr/local/bin/other-transcode"]
