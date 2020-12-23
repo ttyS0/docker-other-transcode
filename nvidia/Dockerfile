@@ -6,7 +6,7 @@
 # https://github.com/donmelton/other_video_transcoding
 #
 
-FROM    nvidia/cuda:11.0-devel-ubuntu20.04 AS devel-base
+FROM    nvidia/cuda:11.1-devel-ubuntu20.04 AS devel-base
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
 
@@ -17,7 +17,7 @@ RUN     apt-get -yqq update && \
         apt-get autoremove -y && \
         apt-get clean -y
 
-FROM        nvidia/cuda:11.0-runtime-ubuntu20.04 AS runtime-base
+FROM        nvidia/cuda:11.1-runtime-ubuntu20.04 AS runtime-base
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
 
@@ -50,7 +50,7 @@ FROM devel-base as build
 
 ENV         FFMPEG_VERSION=4.3.1 \
             FDKAAC_VERSION=2.0.1 \
-            OTHER_TRANSCODE_VERSION=0.5.0 \
+            OTHER_TRANSCODE_VERSION=0.6.0 \
             SRC=/usr/local
 
 ARG         MAKEFLAGS="-j2"

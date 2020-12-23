@@ -18,11 +18,10 @@ ENV         FFMPEG_VERSION=4.3.1 \
             LAME_VERSION=3.100 \
             LIBASS_VERSION=0.14.0 \
             LIBPTHREAD_STUBS_VERSION=0.4 \
-            LIBVIDSTAB_VERSION=1.1.0 \
             X265_VERSION=3.2.1 \
             LIBXML2_VERSION=2.9.10 \
             LIBBLURAY_VERSION=1.1.2 \
-            OTHER_TRANSCODE_VERSION=0.5.0 \
+            OTHER_TRANSCODE_VERSION=0.6.0 \
             SRC=/usr/local
 
 
@@ -111,17 +110,6 @@ RUN  \
         curl -sLO https://download.savannah.gnu.org/releases/freetype/freetype-${FREETYPE_VERSION}.tar.gz && \
         tar -zx --strip-components=1 -f freetype-${FREETYPE_VERSION}.tar.gz && \
         ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-## libvstab https://github.com/georgmartius/vid.stab
-RUN  \
-        DIR=/tmp/vid.stab && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/georgmartius/vid.stab/archive/v${LIBVIDSTAB_VERSION}.tar.gz && \
-        tar -zx --strip-components=1 -f v${LIBVIDSTAB_VERSION}.tar.gz && \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" . && \
         make && \
         make install && \
         rm -rf ${DIR}
@@ -241,7 +229,6 @@ RUN \
         --enable-libass \
         --enable-fontconfig \
         --enable-libfreetype \
-        --enable-libvidstab \
         --enable-libmp3lame \
         --enable-libx265 \
         --enable-libx264 \
