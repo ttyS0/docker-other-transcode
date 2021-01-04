@@ -21,7 +21,7 @@ ENV         FFMPEG_VERSION=4.3.1 \
             X265_VERSION=3.2.1 \
             LIBXML2_VERSION=2.9.10 \
             LIBBLURAY_VERSION=1.1.2 \
-            OTHER_TRANSCODE_VERSION=0.6.0 \
+            OTHER_TRANSCODE_VERSION=0.7.0 \
             SRC=/usr/local
 
 
