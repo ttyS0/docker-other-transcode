@@ -12,6 +12,13 @@ find ${SRC_PATH} -type f -name "*.mkv" -print0 | while IFS= read -r -d '' FILE; 
     /usr/local/bin/other-transcode --decode all --qsv-decoder --eac3 --pass-dts --main-audio 1=stereo --add-subtitle auto --burn-subtitle auto --preset veryslow "${FILE}" < /dev/null
   fi
 
+  if [ ! -f "${FILE##*/}.log" ]; then
+    echo "Something BAD happened! EXITING!"
+    exit 1
+  else
+    rm -fv "${FILE}"
+  fi
+
 done
 
 
