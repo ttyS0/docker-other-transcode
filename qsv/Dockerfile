@@ -153,8 +153,12 @@ RUN \
 
 ## other-transcode https://github.com/donmelton/other_video_transcoding
 RUN \
-        curl -o /usr/local/bin/other-transcode -sL https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
-        chmod a+x /usr/local/bin/other-transcode
+    curl -o /usr/local/bin/other-transcode -sL https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
+    chmod a+x /usr/local/bin/other-transcode
+
+## add my personal wrapper script
+COPY mytranscode.sh /usr/local/bin/mytranscode.sh
+RUN chmod a+x /usr/local/bin/mytranscode.sh
 
 ### Release Stage
 FROM        runtime AS release
