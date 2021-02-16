@@ -1,15 +1,15 @@
-FROM        alpine:3.12.1 AS runtime
+FROM        alpine:3.13.1 AS runtime
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat mpv ruby-full mkvtoolnix
 
-FROM        alpine:3.12.1 AS build
+FROM        alpine:3.13.1 AS build
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat git
 
 WORKDIR     /tmp/workdir
 
 ENV         FFMPEG_VERSION=4.3.1 \
-            AOM_VERSION=v1.0.0 \
+            AOM_VERSION=v2.0.1 \
             FDKAAC_VERSION=2.0.1 \
             FONTCONFIG_VERSION=2.12.4 \
             FREETYPE_VERSION=2.5.5 \
@@ -21,7 +21,7 @@ ENV         FFMPEG_VERSION=4.3.1 \
             X265_VERSION=3.2.1 \
             LIBXML2_VERSION=2.9.10 \
             LIBBLURAY_VERSION=1.1.2 \
-            OTHER_TRANSCODE_VERSION=0.7.0 \
+            OTHER_TRANSCODE_VERSION=0.8.0 \
             SRC=/usr/local
 
 
@@ -53,6 +53,7 @@ RUN     buildDeps="autoconf \
                    yasm \
                    nasm \
                    zlib-dev \
+                   xz \
                    expat-dev" && \
         apk add --no-cache --update ${buildDeps}
 
