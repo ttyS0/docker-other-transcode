@@ -1,14 +1,14 @@
-FROM        alpine:3.13.1 AS runtime
+FROM        alpine:3.13.2 AS runtime
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat mpv ruby-full mkvtoolnix
 
-FROM        alpine:3.13.1 AS build
+FROM        alpine:3.13.2 AS build
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat git
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=4.3.1 \
+ENV         FFMPEG_VERSION=4.3.2 \
             AOM_VERSION=v2.0.1 \
             FDKAAC_VERSION=2.0.1 \
             FONTCONFIG_VERSION=2.12.4 \

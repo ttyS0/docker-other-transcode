@@ -27,7 +27,7 @@ FROM        ubuntu:focal AS build
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=4.3.1 \
+ENV         FFMPEG_VERSION=4.3.2 \
             FDKAAC_VERSION=2.0.1 \
             OTHER_TRANSCODE_VERSION=0.8.0 \
             SRC=/usr/local \
