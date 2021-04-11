@@ -27,7 +27,7 @@ FROM        ubuntu:focal AS build
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=4.3.2 \
+ENV         FFMPEG_VERSION=4.4 \
             FDKAAC_VERSION=2.0.1 \
             OTHER_TRANSCODE_VERSION=0.8.0 \
             SRC=/usr/local \
@@ -155,10 +155,6 @@ RUN \
 RUN \
     curl -o /usr/local/bin/other-transcode -sL https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
     chmod a+x /usr/local/bin/other-transcode
-
-## add my personal wrapper script
-COPY mytranscode.sh /usr/local/bin/mytranscode.sh
-RUN chmod a+x /usr/local/bin/mytranscode.sh
 
 ### Release Stage
 FROM        runtime AS release
