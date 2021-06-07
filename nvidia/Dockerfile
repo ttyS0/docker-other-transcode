@@ -49,8 +49,8 @@ RUN     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && 
 FROM devel-base as build
 
 ENV         FFMPEG_VERSION=4.4 \
-            FDKAAC_VERSION=2.0.1 \
-            OTHER_TRANSCODE_VERSION=0.8.0 \
+            FDKAAC_VERSION=2.0.2 \
+            OTHER_TRANSCODE_VERSION=0.9.0 \
             SRC=/usr/local
 
 ARG         MAKEFLAGS="-j2"

@@ -1,4 +1,4 @@
-FROM  ubuntu:focal AS runtime
+FROM  ubuntu:20.04 AS runtime
 
 RUN   runDeps="ca-certificates \
                expat \
@@ -23,13 +23,13 @@ RUN   sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && \
       dpkg-reconfigure --frontend=noninteractive locales && \
       update-locale LANG=en_US.UTF-8
 
-FROM        ubuntu:focal AS build
+FROM        ubuntu:20.04 AS build
 
 WORKDIR     /tmp/workdir
 
 ENV         FFMPEG_VERSION=4.4 \
-            FDKAAC_VERSION=2.0.1 \
-            OTHER_TRANSCODE_VERSION=0.8.0 \
+            FDKAAC_VERSION=2.0.2 \
+            OTHER_TRANSCODE_VERSION=0.9.0 \
             SRC=/usr/local \
             LIBVA_DRIVER_NAME=iHD
 
@@ -155,6 +155,9 @@ RUN \
 RUN \
     curl -o /usr/local/bin/other-transcode -sL https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
     chmod a+x /usr/local/bin/other-transcode
+
+#COPY other-transcode.rb /usr/local/bin/other-transcode
+#RUN chmod a+x /usr/local/bin/other-transcode
 
 ### Release Stage
 FROM        runtime AS release
