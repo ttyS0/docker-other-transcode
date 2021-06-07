@@ -1,27 +1,26 @@
-FROM        alpine:3.13.4 AS runtime
+FROM        alpine:3.13 AS runtime
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat mpv ruby-full mkvtoolnix
 
-FROM        alpine:3.13.4 AS build
+FROM        alpine:3.13 AS build
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat git
 
 WORKDIR     /tmp/workdir
 
 ENV         FFMPEG_VERSION=4.4 \
-            AOM_VERSION=v2.0.1 \
-            FDKAAC_VERSION=2.0.1 \
-            FONTCONFIG_VERSION=2.12.4 \
-            FREETYPE_VERSION=2.5.5 \
+            AOM_VERSION=v3.0.1 \
+            FDKAAC_VERSION=2.0.2 \
+            FONTCONFIG_VERSION=2.13.1 \
+            FREETYPE_VERSION=2.10.4 \
             FRIBIDI_VERSION=1.0.10 \
-            KVAZAAR_VERSION=2.0.0 \
             LAME_VERSION=3.100 \
-            LIBASS_VERSION=0.14.0 \
+            LIBASS_VERSION=0.15.1 \
             LIBPTHREAD_STUBS_VERSION=0.4 \
             X265_VERSION=3.2.1 \
             LIBXML2_VERSION=2.9.10 \
             LIBBLURAY_VERSION=1.1.2 \
-            OTHER_TRANSCODE_VERSION=0.8.0 \
+            OTHER_TRANSCODE_VERSION=0.9.0 \
             SRC=/usr/local
 
 
@@ -54,6 +53,8 @@ RUN     buildDeps="autoconf \
                    nasm \
                    zlib-dev \
                    xz \
+                   util-linux-dev \
+                   harfbuzz-dev \
                    expat-dev" && \
         apk add --no-cache --update ${buildDeps}
 
@@ -85,7 +86,7 @@ RUN \
         DIR=/tmp/lame && \
         mkdir -p ${DIR} && \
         cd ${DIR} && \
-        curl -sL https://versaweb.dl.sourceforge.net/project/lame/lame/$(echo ${LAME_VERSION} | sed -e 's/[^0-9]*\([0-9]*\)[.]\([0-9]*\)[.]\([0-9]*\)\([0-9A-Za-z-]*\)/\1.\2/')/lame-${LAME_VERSION}.tar.gz | \
+        curl -sL https://managedway.dl.sourceforge.net/project/lame/lame/$(echo ${LAME_VERSION} | sed -e 's/[^0-9]*\([0-9]*\)[.]\([0-9]*\)[.]\([0-9]*\)\([0-9A-Za-z-]*\)/\1.\2/')/lame-${LAME_VERSION}.tar.gz | \
         tar -zx --strip-components=1 && \
         ./configure --prefix="${PREFIX}" --bindir="${PREFIX}/bin" --enable-shared --enable-nasm --disable-frontend && \
         make && \
@@ -148,30 +149,6 @@ RUN  \
         ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
         make && \
         make install && \
-        rm -rf ${DIR}
-## kvazaar https://github.com/ultravideo/kvazaar
-RUN \
-        DIR=/tmp/kvazaar && \
-        mkdir -p ${DIR} && \
-        cd ${DIR} && \
-        curl -sLO https://github.com/ultravideo/kvazaar/archive/v${KVAZAAR_VERSION}.tar.gz && \
-        tar -zx --strip-components=1 -f v${KVAZAAR_VERSION}.tar.gz && \
-        ./autogen.sh && \
-        ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
-        make && \
-        make install && \
-        rm -rf ${DIR}
-
-RUN \
-        DIR=/tmp/aom && \
-        git clone --branch ${AOM_VERSION} --depth 1 https://aomedia.googlesource.com/aom ${DIR} ; \
-        cd ${DIR} ; \
-        rm -rf CMakeCache.txt CMakeFiles ; \
-        mkdir -p ./aom_build ; \
-        cd ./aom_build ; \
-        cmake -DCMAKE_INSTALL_PREFIX="${PREFIX}" -DBUILD_SHARED_LIBS=1 ..; \
-        make ; \
-        make install ; \
         rm -rf ${DIR}
 
 RUN \
@@ -242,8 +219,6 @@ RUN \
         --enable-libbluray \
         --extra-libs=-ldl \
         --prefix="${PREFIX}" \
-        --enable-libkvazaar \
-        --enable-libaom \
         --extra-libs=-lpthread \
         --extra-cflags="-I${PREFIX}/include" \
         --extra-ldflags="-L${PREFIX}/lib" && \
