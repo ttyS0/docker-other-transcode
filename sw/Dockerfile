@@ -64,7 +64,6 @@ RUN \
         git checkout Release_${X265_VERSION} && \
         patch -p1 multilib.sh < /tmp/multilib.patch && \
         ./multilib.sh && \
-        make install && \
         rm -rf ${DIR}
 
 ### fdk-aac https://github.com/mstorsjo/fdk-aac
