@@ -47,22 +47,24 @@ RUN     buildDeps="autoconf \
                    xz \
                    util-linux-dev \
                    harfbuzz-dev \
+                   patch \
                    expat-dev" && \
         apk add --no-cache --update ${buildDeps}
 
 
 ### x265 http://x265.org/
-COPY multilib_mod.sh /tmp
+### The multilib.patch removes 12bit support from x265, as 8bit & 10bit is all that's needed right now.
+COPY multilib.patch /tmp/multilib.patch
 RUN \
         DIR=/tmp/x265 && \
         mkdir -p ${DIR} && \
         cd ${DIR} && \
-        curl -sL https://bitbucket.org/multicoreware/x265_git/downloads/x265_${X265_VERSION}.tar.gz  | \
-        tar -zx && \
-        cd x265_${X265_VERSION}/build/linux && \
-        cp /tmp/multilib_mod.sh . && \
-        /bin/sh ./multilib_mod.sh && \
-        make -C 8bit install && \
+        git clone https://bitbucket.org/multicoreware/x265_git && \
+        cd x265_git/build/linux && \
+        git checkout Release_${X265_VERSION} && \
+        patch -p1 multilib.sh < /tmp/multilib.patch && \
+        ./multilib.sh && \
+        make install && \
         rm -rf ${DIR}
 
 ### fdk-aac https://github.com/mstorsjo/fdk-aac
