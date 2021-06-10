@@ -10,6 +10,9 @@ WORKDIR     /tmp/workdir
 
 ENV         FFMPEG_VERSION=4.4 \
             FDKAAC_VERSION=2.0.2 \
+            LIBASS_VERSION=0.15.1 \
+            FRIBIDI_VERSION=1.0.10 \
+            FONTCONFIG_VERSION=2.13.1 \
             LIBPTHREAD_STUBS_VERSION=0.4 \
             X265_VERSION=3.5 \
             OTHER_TRANSCODE_VERSION=0.9.0 \
@@ -51,6 +54,46 @@ RUN     buildDeps="autoconf \
                    expat-dev" && \
         apk add --no-cache --update ${buildDeps}
 
+## fridibi https://www.fribidi.org/
+## required for libass
+RUN  \
+       DIR=/tmp/fribidi && \
+       mkdir -p ${DIR} && \
+       cd ${DIR} && \
+       curl -sLO https://github.com/fribidi/fribidi/releases/download/v${FRIBIDI_VERSION}/fribidi-${FRIBIDI_VERSION}.tar.xz && \
+       tar -x --strip-components=1 -f fribidi-${FRIBIDI_VERSION}.tar.xz && \
+       ./autogen.sh && \
+       ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
+       make -j1 && \
+       make install && \
+       rm -rf ${DIR}
+
+## fontconfig https://www.freedesktop.org/wiki/Software/fontconfig/
+## required for libass
+RUN  \
+       DIR=/tmp/fontconfig && \
+       mkdir -p ${DIR} && \
+       cd ${DIR} && \
+       curl -sLO https://www.freedesktop.org/software/fontconfig/release/fontconfig-${FONTCONFIG_VERSION}.tar.bz2 && \
+       tar -jx --strip-components=1 -f fontconfig-${FONTCONFIG_VERSION}.tar.bz2 && \
+       ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
+       make && \
+       make install && \
+       rm -rf ${DIR}
+
+## libass https://github.com/libass/libass
+## This is for subtitles
+RUN  \
+       DIR=/tmp/libass && \
+       mkdir -p ${DIR} && \
+       cd ${DIR} && \
+       curl -sLO https://github.com/libass/libass/archive/${LIBASS_VERSION}.tar.gz && \
+       tar -zx --strip-components=1 -f ${LIBASS_VERSION}.tar.gz && \
+       ./autogen.sh && \
+       ./configure --prefix="${PREFIX}" --disable-static --enable-shared && \
+       make && \
+       make install && \
+       rm -rf ${DIR}
 
 ### x265 http://x265.org/
 ### The multilib.patch removes 12bit support from x265, as 8bit & 10bit is all that's needed right now.
@@ -116,6 +159,8 @@ RUN \
         --disable-ffplay \
         --disable-postproc \
         --enable-shared \
+        --enable-fontconfig \
+        --enable-libass \
         --enable-gpl \
         --enable-libx265 \
         --enable-libx264 \
