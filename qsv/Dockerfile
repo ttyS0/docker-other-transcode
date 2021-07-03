@@ -209,6 +209,7 @@ ENV         LD_LIBRARY_PATH=/opt/ffmpeg/lib \
 COPY --from=build /opt /opt/
 
 RUN \
+    rm -rf /opt/ffmpeg/share && \
     cd /usr/local/bin && \
     ln -s /opt/ffmpeg/bin/* . && \
     curl -o /usr/local/bin/other-transcode -sL https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
