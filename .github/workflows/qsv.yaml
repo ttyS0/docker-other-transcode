@@ -34,7 +34,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./qsv
           push: true
           tags: |
             ghcr.io/ttys0/other-transcode:${{ env.ENCODER }}-latest
