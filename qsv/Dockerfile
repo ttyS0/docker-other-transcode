@@ -1,4 +1,6 @@
-FROM  ubuntu:focal AS runtime
+FROM  ubuntu:20.04 AS runtime
+LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-transcode"
+
 
 RUN   runDeps="ca-certificates \
                expat \
@@ -29,13 +31,13 @@ FROM        ubuntu:focal AS build
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=4.4 \
+ENV         FFMPEG_VERSION=4.4.1 \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
-            LIBVA_VERSION=2.12.0 \
-            GMMLIB_VERSION=21.2.1 \
-            INTEL_MEDIA_VERSION=21.2.3 \
-            INTEL_MEDIA_SDK_VERSION=21.2.3
+            LIBVA_VERSION=2.13.0 \
+            GMMLIB_VERSION=22.0.0 \
+            INTEL_MEDIA_VERSION=21.4.3 \
+            INTEL_MEDIA_SDK_VERSION=21.4.3
 
 
 ARG         LD_LIBRARY_PATH=/opt/ffmpeg/lib
@@ -199,6 +201,8 @@ RUN \
 ### Release Stage
 FROM        runtime AS release
 MAINTAINER  Sean Johnson <sean@ttys0.net>
+LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-transcode"
+
 
 ENV         LD_LIBRARY_PATH=/opt/ffmpeg/lib \
             LIBVA_DRIVERS_PATH=/opt/ffmpeg/lib/dri \

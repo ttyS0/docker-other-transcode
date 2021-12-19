@@ -1,18 +1,20 @@
-FROM        alpine:3.13 AS runtime
+FROM        alpine:3.15.0 AS runtime
+LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-transcode"
+
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat mpv ruby-full mkvtoolnix
 
-FROM        alpine:3.13 AS build
+FROM        alpine:3.15.0 AS build
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat git
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=4.4 \
+ENV         FFMPEG_VERSION=4.4.1 \
             FDKAAC_VERSION=2.0.2 \
-            LIBASS_VERSION=0.15.1 \
-            FRIBIDI_VERSION=1.0.10 \
-            FONTCONFIG_VERSION=2.13.1 \
+            LIBASS_VERSION=0.15.2 \
+            FRIBIDI_VERSION=1.0.11 \
+            FONTCONFIG_VERSION=2.13.94 \
             LIBPTHREAD_STUBS_VERSION=0.4 \
             X265_VERSION=3.5 \
             OTHER_TRANSCODE_VERSION=0.9.0 \
@@ -204,6 +206,8 @@ RUN \
 ### Release Stage
 FROM        runtime AS release
 MAINTAINER  Sean Johnson <sean@ttys0.net>
+LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-transcode"
+
 
 ENV         LD_LIBRARY_PATH=/usr/local/lib:/usr/local/lib64
 
