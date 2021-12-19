@@ -42,4 +42,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/ttys0/other-transcode:${{ env.ENCODER }}-latest
-            ghcr.io/ttys0/other-transcode:${{ env.ENCODER }}${{ env.VERSION}}
+            ghcr.io/ttys0/other-transcode:${{ env.ENCODER }}-${{ env.VERSION}}
