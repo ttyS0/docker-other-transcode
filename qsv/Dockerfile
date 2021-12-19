@@ -35,9 +35,9 @@ ENV         FFMPEG_VERSION=4.4.1 \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
             LIBVA_VERSION=2.13.0 \
-            GMMLIB_VERSION=22.0.0 \
-            INTEL_MEDIA_VERSION=21.4.3 \
-            INTEL_MEDIA_SDK_VERSION=21.4.3
+            GMMLIB_VERSION=21.3.1 \
+            INTEL_MEDIA_VERSION=21.3.5 \
+            INTEL_MEDIA_SDK_VERSION=21.3.5
 
 
 ARG         LD_LIBRARY_PATH=/opt/ffmpeg/lib
