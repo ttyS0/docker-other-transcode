@@ -10,8 +10,6 @@ This image builds `ffmpeg` with NVidia & CUDA libraries, and should be used on s
 
 * The latest [NVidia drivers from NVidia](https://www.nvidia.com/Download/index.aspx), _not_ the ones bundled with the running Linux Distribution, should be used.
 
-* The latest [Docker-CE](https://docs.docker.com/engine/install/), _not_ the Docker bundled with the running Linux Distribution should be used. This is to provide the best compatibility with the NVidia Container Toolkit. With newer distributions, such as Ubuntu 20.04, the distro bundled Docker seems to work fine. When in doubt, use the upstream.
-
 * The [NVidia Container Toolkit](https://github.com/NVIDIA/nvidia-docker) must be installed. It's very important to restart the Docker daemon after installation as it updates the Docker configuration.
 
 
@@ -32,22 +30,11 @@ This image is for only using software encoding via `ffmpeg`. It is also the only
 
 The base image version exactly tracks the `other-transcode` version. The `{version}` suffix can be replaced with `latest` to track the latest builds.
 
-## Docker Hub
+All images are hosted via GitHub Container Registry
 
-While images get pushed automatically to Docker Hub, it's possible they will be unavailable due to limitations of Docker Hub free accounts. Alternatively, they are also available from my self hosted Harbor instance.
-
-* ttys0/other-transcode:nvidia-{version}
-* ttys0/other-transcode:qsv-{version}
-* ttys0/other-transcode:sw-{version}
-
-
-## Harbor
-
-These images are served from a self-hosted Harbor instance running in my Home Lab environment. As such, availability is subject to the vagaries of my internet connection and the health of my Home Lab.
-
-* hub.skj.dev/img/other-transcode:nvidia-{version}
-* hub.skj.dev/img/other-transcode:qsv-{version}
-* hub.skj.dev.img/other-transcode:sw-{version}
+* ghcr.io/ttys0/other-transcode:nvidia-{version}
+* ghcr.io/ttys0/other-transcode:qsv-{version}
+* ghcr.io/ttys0/other-transcode:sw-{version}
 
 
 # Usage
@@ -64,17 +51,17 @@ Using that setup, to transcode `source_file.mkv` with the default H264 encoding,
 ```
 # Software Encoding H.264
 docker run --rm -v $(pwd):$(pwd) -w $(pwd) \ 
-  hub.skj.dev/img/other-transcode:sw-0.4.0 --x264-avbr --target 1080p=5000 \
+  ghcr.io/ttys0/other-transcode:sw-latest --x264-avbr --target 1080p=5000 \
   src/source_file.mkv
   
 # QSV Encoding H.264
 docker run --rm --device /dev/dri:/dev/dri -v $(pwd):$(pwd) -w $(pwd) \
-  hub.skj.dev/img/other-transcode:qsv-0.4.0 --target 1080p=6000 \
+  ghcr.io/ttys0/other-transcode:qsv-latest --target 1080p=6000 \
   src/source_file.mkv
 
 # NVidia Encoding HEVC
 docker run --rm --gpus all -v $(pwd):$(pwd) -w $(pwd) \ 
-  hub.skj.dev/img/other-transcode:nvidia-0.4.0 --hevc \
+  ghcr.io/ttys0/other-transcode:nvidia-latest --hevc \
   src/source_file.mkv
 ```
 
