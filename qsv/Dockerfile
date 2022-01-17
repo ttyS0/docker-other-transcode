@@ -31,13 +31,13 @@ FROM        ubuntu:focal AS build
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=4.4.1 \
+ENV         FFMPEG_VERSION=5.0  \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
             LIBVA_VERSION=2.13.0 \
-            GMMLIB_VERSION=21.3.1 \
-            INTEL_MEDIA_VERSION=21.3.5 \
-            INTEL_MEDIA_SDK_VERSION=21.3.5
+            GMMLIB_VERSION=22.0.1 \
+            INTEL_MEDIA_VERSION=22.1.1 \
+            INTEL_MEDIA_SDK_VERSION=22.1.0
 
 
 ARG         LD_LIBRARY_PATH=/opt/ffmpeg/lib
@@ -173,7 +173,6 @@ RUN \
         --disable-doc \
         --disable-ffplay \
         --enable-shared \
-        --enable-avresample \
         --enable-gpl \
         --enable-libass \
         --enable-fontconfig \

@@ -6,7 +6,7 @@
 # https://github.com/donmelton/other_video_transcoding
 #
 
-FROM    nvidia/cuda:11.4.2-devel-ubuntu20.04 AS devel-base
+FROM    nvidia/cuda:11.6.0-devel-ubuntu20.04 AS devel-base
 LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-transcode"
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
@@ -18,7 +18,7 @@ RUN     apt-get -yqq update && \
         apt-get autoremove -y && \
         apt-get clean -y
 
-FROM        nvidia/cuda:11.4.2-runtime-ubuntu20.04 AS runtime-base
+FROM        nvidia/cuda:11.6.0-runtime-ubuntu20.04 AS runtime-base
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
 
@@ -49,7 +49,7 @@ RUN     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && 
 
 FROM devel-base as build
 
-ENV         FFMPEG_VERSION=4.4.1 \
+ENV         FFMPEG_VERSION=5.0 \
             FDKAAC_VERSION=2.0.2 \
             OTHER_TRANSCODE_VERSION=0.9.0 \
             SRC=/usr/local
@@ -127,7 +127,6 @@ RUN \
         --disable-doc \
         --disable-ffplay \
         --enable-shared \
-        --enable-avresample \
         --enable-gpl \
         --enable-libass \
         --enable-fontconfig \
