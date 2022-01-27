@@ -51,7 +51,7 @@ FROM devel-base as build
 
 ENV         FFMPEG_VERSION=5.0 \
             FDKAAC_VERSION=2.0.2 \
-            OTHER_TRANSCODE_VERSION=0.9.0 \
+            OTHER_TRANSCODE_VERSION=0.10.0 \
             SRC=/usr/local
 
 ARG         MAKEFLAGS="-j2"

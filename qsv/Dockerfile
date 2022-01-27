@@ -206,7 +206,7 @@ LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-tra
 ENV         LD_LIBRARY_PATH=/opt/ffmpeg/lib \
             LIBVA_DRIVERS_PATH=/opt/ffmpeg/lib/dri \
             LIBVA_DRIVER_NAME="iHD" \
-            OTHER_TRANSCODE_VERSION=0.9.0 \
+            OTHER_TRANSCODE_VERSION=0.10.0 \
             LANG=en_US.UTF-8
 
 COPY --from=build /opt /opt/

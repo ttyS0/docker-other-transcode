@@ -17,7 +17,7 @@ ENV         FFMPEG_VERSION=5.0 \
             FONTCONFIG_VERSION=2.13.94 \
             LIBPTHREAD_STUBS_VERSION=0.4 \
             X265_VERSION=3.5 \
-            OTHER_TRANSCODE_VERSION=0.9.0 \
+            OTHER_TRANSCODE_VERSION=0.10.0 \
             SRC=/usr/local
 
 
