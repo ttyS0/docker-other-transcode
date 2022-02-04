@@ -132,7 +132,6 @@ RUN \
         --enable-fontconfig \
         --enable-libfreetype \
         --enable-nonfree \
-        --enable-openssl \
         --enable-libfdk_aac \
         --extra-libs=-lpthread \
         --enable-postproc \
@@ -144,8 +143,7 @@ RUN \
         --prefix="${PREFIX}" \
         --enable-nvdec \
         --enable-cuda \
-        --enable-ffnvcodec \
-        --enable-libnpp && \
+        --enable-ffnvcodec && \
         make && \
         make install && \
         make distclean && \
