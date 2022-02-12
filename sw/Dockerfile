@@ -197,11 +197,12 @@ RUN \
 
 
 ### other-transcode https://github.com/donmelton/other_video_transcoding
-RUN \
-        curl -sLO https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
-        mv other-transcode /usr/local/bin/other-transcode && \
-        chmod a+x /usr/local/bin/other-transcode
+RUN curl -sLo /usr/local/bin/other-transcode https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
+    chmod a+x /usr/local/bin/other-transcode
 
+### classic-transcode https://gist.github.com/donmelton/aab13b95e97901eb106527e47fbaa1ce
+RUN curl -sLo /usr/local/bin/classic-transcode https://gist.github.com/donmelton/aab13b95e97901eb106527e47fbaa1ce/raw/91d8e13ff3ebfcbf09040ceef5f51564ce9ed794/classic-transcode.rb && \
+    chmod a+x /usr/local/bin/classic-transcode
 
 ### Release Stage
 FROM        runtime AS release
