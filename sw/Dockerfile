@@ -2,7 +2,7 @@ FROM        alpine:3.15.0 AS runtime
 LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-transcode"
 
 
-RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat mpv ruby-full mkvtoolnix
+RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat mpv ruby mkvtoolnix bash
 
 FROM        alpine:3.15.0 AS build
 
