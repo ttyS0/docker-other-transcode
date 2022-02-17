@@ -143,6 +143,8 @@ RUN \
         --prefix="${PREFIX}" \
         --enable-nvdec \
         --enable-cuda \
+        --enable-libnpp \
+        --enable-openssl \
         --enable-ffnvcodec && \
         make && \
         make install && \
