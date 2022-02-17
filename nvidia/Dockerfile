@@ -145,6 +145,7 @@ RUN \
         --enable-cuda \
         --enable-libnpp \
         --enable-openssl \
+        --enable-cuda-nvcc \
         --enable-ffnvcodec && \
         make && \
         make install && \
