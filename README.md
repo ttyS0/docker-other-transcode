@@ -6,6 +6,8 @@ The `other-transcode` tool leverages `ffmpeg`, and by default tries to take adva
 
 This image builds `ffmpeg` with NVidia & CUDA libraries, and should be used on systems that have an NVENC capable NVidia card.
 
+There is also a [/usr/local/bin/special-transcode](https://gist.github.com/donmelton/7c9da839d69ca9a90d1b000e5762b3e3) script that can be used for express transcoding. Its options are limited, as it's designed to be a more targeted tool. To use it, adjust the `entrypoint` when the container is run. 
+
 ### Requirements
 
 * The latest [NVidia drivers from NVidia](https://www.nvidia.com/Download/index.aspx), _not_ the ones bundled with the running Linux Distribution, should be used.
@@ -25,6 +27,8 @@ This image builds `ffmpeg` with the [Intel Media SDK](https://github.com/Intel-M
 ## SW
 
 This image is for only using software encoding via `ffmpeg`. It is also the only image that attempts to provide both an Intel (`amd64`) and ARM (`arm64`) image, as there are no video hardware dependencies.
+
+There is also a [/usr/local/bin/classic-transcode](https://gist.github.com/donmelton/aab13b95e97901eb106527e47fbaa1ce) script that can be used for express transcoding. It defaults to `x264-cbr` mode. The included script has also been modified to use `libfdk_aac` since support is built into the container's `ffmpeg`, and it provides better quality. 
 
 # Prebuilt Images
 

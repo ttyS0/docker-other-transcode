@@ -163,11 +163,12 @@ RUN \
         LD_LIBRARY_PATH=/usr/local/lib ffmpeg -buildconf
 
 ## other-transcode https://github.com/donmelton/other_video_transcoding
-RUN \
-        curl -o /usr/local/bin/other-transcode -sLO https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
-        chmod a+x /usr/local/bin/other-transcode
+RUN   curl -o /usr/local/bin/other-transcode -sLO https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
+      chmod a+x /usr/local/bin/other-transcode
 
-
+## https://gist.github.com/donmelton/7c9da839d69ca9a90d1b000e5762b3e3
+RUN   curl -so /usr/local/bin/special-transcode https://gist.github.com/donmelton/7c9da839d69ca9a90d1b000e5762b3e3/raw/46b087372a7bae1abe73ad2764d43f724bed8a63/special-transcode.rb && \
+      chmod a+x /usr/local/bin/special-transcode
 
 FROM        runtime-base AS release
 MAINTAINER  Sean Johnson <sean@ttys0.net>

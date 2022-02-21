@@ -200,8 +200,8 @@ RUN \
 RUN curl -sLo /usr/local/bin/other-transcode https://raw.githubusercontent.com/donmelton/other_video_transcoding/${OTHER_TRANSCODE_VERSION}/bin/other-transcode && \
     chmod a+x /usr/local/bin/other-transcode
 
-### classic-transcode https://gist.github.com/donmelton/aab13b95e97901eb106527e47fbaa1ce
-RUN curl -sLo /usr/local/bin/classic-transcode https://gist.github.com/donmelton/aab13b95e97901eb106527e47fbaa1ce/raw/1d73297e31bd5f9f53e26733dc02d646b842e618/classic-transcode.rb && \
+### classic-transcode https://gist.github.com/ttyS0/bf3b7fc1bfea138634249c9540456364
+RUN curl -sLo /usr/local/bin/classic-transcode https://gist.github.com/ttyS0/bf3b7fc1bfea138634249c9540456364/raw/47da343b743f2a2ecfda49d1d2297574e28edbaf/classic-transcode.rb && \
     chmod a+x /usr/local/bin/classic-transcode
 
 ### Release Stage
