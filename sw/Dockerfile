@@ -201,7 +201,7 @@ RUN curl -sLo /usr/local/bin/other-transcode https://raw.githubusercontent.com/d
     chmod a+x /usr/local/bin/other-transcode
 
 ### classic-transcode https://gist.github.com/ttyS0/bf3b7fc1bfea138634249c9540456364
-RUN curl -sLo /usr/local/bin/classic-transcode https://gist.github.com/ttyS0/bf3b7fc1bfea138634249c9540456364/raw/47da343b743f2a2ecfda49d1d2297574e28edbaf/classic-transcode.rb && \
+RUN curl -sLo /usr/local/bin/classic-transcode https://gist.github.com/ttyS0/bf3b7fc1bfea138634249c9540456364/raw/dbc26362babe7153dfaf5d09e96fa1c14a095cff/classic-transcode.rb && \
     chmod a+x /usr/local/bin/classic-transcode
 
 ### Release Stage
