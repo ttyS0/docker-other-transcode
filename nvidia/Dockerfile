@@ -167,7 +167,7 @@ RUN   curl -o /usr/local/bin/other-transcode -sLO https://raw.githubusercontent.
       chmod a+x /usr/local/bin/other-transcode
 
 ## https://gist.github.com/donmelton/7c9da839d69ca9a90d1b000e5762b3e3
-RUN   curl -so https://gist.github.com/ttyS0/4e6f8d4e23656ee5b253668caf53c754/raw/2366dc0820eb12a65b964b199658502024b90e6d/special-transcode.rb && \
+RUN   curl -o /usr/local/bin/special-transcode https://gist.github.com/ttyS0/4e6f8d4e23656ee5b253668caf53c754/raw/2366dc0820eb12a65b964b199658502024b90e6d/special-transcode.rb && \
       chmod a+x /usr/local/bin/special-transcode
 
 FROM        runtime-base AS release
