@@ -34,10 +34,10 @@ WORKDIR     /tmp/workdir
 ENV         FFMPEG_VERSION=5.0  \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
-            LIBVA_VERSION=2.13.0 \
-            GMMLIB_VERSION=22.0.1 \
-            INTEL_MEDIA_VERSION=22.1.1 \
-            INTEL_MEDIA_SDK_VERSION=22.1.0
+            LIBVA_VERSION=2.14.0 \
+            GMMLIB_VERSION=22.1.1 \
+            INTEL_MEDIA_VERSION=22.3.1 \
+            INTEL_MEDIA_SDK_VERSION=22.3.0
 
 
 ARG         LD_LIBRARY_PATH=/opt/ffmpeg/lib

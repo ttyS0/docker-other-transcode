@@ -8,7 +8,7 @@ on:
 
 env:
   ENCODER: qsv
-  VERSION: 0.10.0
+  VERSION: 0.10.0-1->
 
 jobs:
   build-and-push-image:
