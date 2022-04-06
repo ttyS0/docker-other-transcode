@@ -31,7 +31,7 @@ FROM        ubuntu:focal AS build
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=5.0  \
+ENV         FFMPEG_VERSION=5.0.1  \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
             LIBVA_VERSION=2.14.0 \
