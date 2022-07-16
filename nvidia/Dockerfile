@@ -86,7 +86,7 @@ RUN      buildDeps="autoconf \
                     make \
                     nasm \
                     perl \
-                    python \
+                    python2 \
                     python3 \
                     libva-dev \
                     zlib1g-dev" && \
