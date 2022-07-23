@@ -49,7 +49,7 @@ RUN     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && 
 
 FROM devel-base as build
 
-ENV         FFMPEG_VERSION=5.0.1 \
+ENV         FFMPEG_VERSION=5.1 \
             FDKAAC_VERSION=2.0.2 \
             OTHER_TRANSCODE_VERSION=0.11.0 \
             SRC=/usr/local

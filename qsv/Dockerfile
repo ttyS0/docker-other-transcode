@@ -31,7 +31,7 @@ FROM        ubuntu:22.04 AS build
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=5.0.1  \
+ENV         FFMPEG_VERSION=5.1  \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
             LIBVA_VERSION=2.15.0 \

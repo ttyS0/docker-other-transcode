@@ -10,7 +10,7 @@ RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcryp
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=5.0.1 \
+ENV         FFMPEG_VERSION=5.1 \
             FDKAAC_VERSION=2.0.2 \
             LIBASS_VERSION=0.15.2 \
             FRIBIDI_VERSION=1.0.11 \

@@ -8,7 +8,7 @@ on:
 
 env:
   ENCODER: nvidia
-  VERSION: 0.11.0
+  VERSION: 0.11.0-1
 
 jobs:
   build-and-push-image:
