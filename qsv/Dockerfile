@@ -31,11 +31,11 @@ FROM        ubuntu:22.04 AS build
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=5.1.1  \
+ENV         FFMPEG_VERSION=5.1.2  \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
-            LIBVA_VERSION=2.15.0 \
-            GMMLIB_VERSION=22.1.4 \
+            LIBVA_VERSION=2.16.0 \
+            GMMLIB_VERSION=22.2.1 \
             INTEL_MEDIA_VERSION=22.4.4 \
             INTEL_MEDIA_SDK_VERSION=22.4.4
 

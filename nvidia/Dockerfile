@@ -6,7 +6,7 @@
 # https://github.com/donmelton/other_video_transcoding
 #
 
-FROM    nvidia/cuda:11.7.0-devel-ubuntu22.04 AS devel-base
+FROM    nvidia/cuda:11.8.0-devel-ubuntu22.04 AS devel-base
 LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-transcode"
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
@@ -18,7 +18,7 @@ RUN     apt-get -yqq update && \
         apt-get autoremove -y && \
         apt-get clean -y
 
-FROM        nvidia/cuda:11.7.0-runtime-ubuntu22.04 AS runtime-base
+FROM        nvidia/cuda:11.8.0-runtime-ubuntu22.04 AS runtime-base
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
 
@@ -49,9 +49,9 @@ RUN     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && 
 
 FROM devel-base as build
 
-ENV         FFMPEG_VERSION=5.1.1 \
+ENV         FFMPEG_VERSION=5.1.2 \
             FDKAAC_VERSION=2.0.2 \
-            OTHER_TRANSCODE_VERSION=0.11.0 \
+            OTHER_TRANSCODE_VERSION=0.12.0 \
             SRC=/usr/local
 
 ARG         MAKEFLAGS="-j2"
