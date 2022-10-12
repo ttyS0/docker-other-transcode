@@ -35,7 +35,7 @@ ENV         FFMPEG_VERSION=5.1.2  \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
             LIBVA_VERSION=2.16.0 \
-            GMMLIB_VERSION=22.2.1 \
+            GMMLIB_VERSION=22.1.8 \
             INTEL_MEDIA_VERSION=22.4.4 \
             INTEL_MEDIA_SDK_VERSION=22.4.4
 
