@@ -6,7 +6,7 @@
 # https://github.com/donmelton/other_video_transcoding
 #
 
-FROM    nvidia/cuda:11.8.0-devel-ubuntu22.04 AS devel-base
+FROM    nvidia/cuda:11.7.0-devel-ubuntu22.04 AS devel-base
 LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-transcode"
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
@@ -18,7 +18,7 @@ RUN     apt-get -yqq update && \
         apt-get autoremove -y && \
         apt-get clean -y
 
-FROM        nvidia/cuda:11.8.0-runtime-ubuntu22.04 AS runtime-base
+FROM        nvidia/cuda:11.7.0-runtime-ubuntu22.04 AS runtime-base
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
 
