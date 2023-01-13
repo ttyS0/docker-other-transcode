@@ -34,10 +34,10 @@ WORKDIR     /tmp/workdir
 ENV         FFMPEG_VERSION=5.1.2  \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
-            LIBVA_VERSION=2.16.0 \
-            GMMLIB_VERSION=22.2.1 \
-            INTEL_MEDIA_VERSION=22.5.4 \
-            INTEL_MEDIA_SDK_VERSION=22.5.4
+            LIBVA_VERSION=2.17.0 \
+            GMMLIB_VERSION=22.3.3 \
+            INTEL_MEDIA_VERSION=22.6.6 \
+            INTEL_MEDIA_SDK_VERSION=22.6.6
 
 
 ARG         LD_LIBRARY_PATH=/opt/ffmpeg/lib
@@ -99,7 +99,7 @@ RUN \
         curl -sL https://github.com/intel/libva/archive/refs/tags/${LIBVA_VERSION}.tar.gz | \
         tar -zx --strip-components=1 && \
         ./autogen.sh --prefix="${PREFIX}" && \
-        make && \
+        make -j && \
         make install && \
         rm -rf ${DIR}
 
@@ -113,7 +113,7 @@ RUN \
         mkdir build && \
         cd build && \
         cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=${PREFIX} .. && \
-        make && \
+        make -j && \
         make install && \
         rm -rf {DIR}
 
@@ -206,7 +206,7 @@ LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-tra
 ENV         LD_LIBRARY_PATH=/opt/ffmpeg/lib \
             LIBVA_DRIVERS_PATH=/opt/ffmpeg/lib/dri \
             LIBVA_DRIVER_NAME="iHD" \
-            OTHER_TRANSCODE_VERSION=0.10.0 \
+            OTHER_TRANSCODE_VERSION=0.12.0 \
             LANG=en_US.UTF-8
 
 COPY --from=build /opt /opt/
