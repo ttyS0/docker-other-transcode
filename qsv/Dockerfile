@@ -37,7 +37,7 @@ ENV         FFMPEG_VERSION=5.1.2  \
             LIBVA_VERSION=2.17.0 \
             GMMLIB_VERSION=22.3.3 \
             INTEL_MEDIA_VERSION=22.6.6 \
-            INTEL_MEDIA_SDK_VERSION=22.6.6
+            INTEL_MEDIA_SDK_VERSION=22.6.5
 
 
 ARG         LD_LIBRARY_PATH=/opt/ffmpeg/lib
