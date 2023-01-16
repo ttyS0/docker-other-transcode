@@ -159,6 +159,8 @@ RUN \
 ## ffmpeg https://github.com/intel/cartwheel-ffmpeg
 RUN  \
         DIR=/tmp/ffmpeg && mkdir -p ${DIR} && cd ${DIR} && \
+        git config --global user.email "sean@ttysO.net" && \
+        git config --global user.name "Sean" && \
         git clone https://github.com/intel/cartwheel-ffmpeg.git --recursive . && \
         cd ffmpeg && \
         git am ../patches/*.patch && \
