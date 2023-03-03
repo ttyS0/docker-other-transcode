@@ -4,15 +4,15 @@ LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-tra
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat mpv ruby mkvtoolnix bash
 
-FROM        alpine:3.16.2 AS build
+FROM        alpine:3.16.4 AS build
 
 RUN         apk add --no-cache --update libgcc libstdc++ ca-certificates libcrypto1.1 libssl1.1 libgomp expat git
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=5.1.2 \
+ENV         FFMPEG_VERSION=6.0 \
             FDKAAC_VERSION=2.0.2 \
-            LIBASS_VERSION=0.16.0 \
+            LIBASS_VERSION=0.17.1 \
             FRIBIDI_VERSION=1.0.12 \
             FONTCONFIG_VERSION=2.13.94 \
             LIBPTHREAD_STUBS_VERSION=0.4 \

@@ -6,7 +6,7 @@
 # https://github.com/donmelton/other_video_transcoding
 #
 
-FROM    nvidia/cuda:11.7.0-devel-ubuntu22.04 AS devel-base
+FROM    nvidia/cuda:11.8.0-devel-ubuntu22.04 AS devel-base
 LABEL org.opencontainers.image.source="https://github.com/ttyS0/docker-other-transcode"
 
 ENV	    NVIDIA_DRIVER_CAPABILITIES compute,utility,video
@@ -49,7 +49,7 @@ RUN     sed -i -e 's/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen && 
 
 FROM devel-base as build
 
-ENV         FFMPEG_VERSION=5.1.2 \
+ENV         FFMPEG_VERSION=6.0 \
             FDKAAC_VERSION=2.0.2 \
             OTHER_TRANSCODE_VERSION=0.12.0 \
             SRC=/usr/local
@@ -89,7 +89,8 @@ RUN      buildDeps="autoconf \
                     python2 \
                     python3 \
                     libva-dev \
-                    zlib1g-dev" && \
+                    zlib1g-dev \
+                    libzimg-dev" && \
         apt-get -yqq update && \
         DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${buildDeps}
 
@@ -146,7 +147,8 @@ RUN \
         --enable-libnpp \
         --enable-openssl \
         --enable-cuda-nvcc \
-        --enable-ffnvcodec && \
+        --enable-ffnvcodec \
+        --enable-libzimg && \
         make && \
         make install && \
         make distclean && \

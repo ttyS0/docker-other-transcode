@@ -8,7 +8,7 @@ on:
 
 env:
   ENCODER: sw
-  VERSION: 0.12.0
+  VERSION: 0.12.0-1
 
 jobs:
   build-and-push-image:

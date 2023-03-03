@@ -85,7 +85,8 @@ RUN     buildDeps="autoconf \
                    libx11-dev \
                    libgl1-mesa-glx \
                    libgl1-mesa-dev \
-                   libsdl2-dev" && \
+                   libsdl2-dev \
+                   libzimg-dev" && \
         apt-get -yqq update && \
         DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${buildDeps}
 
@@ -184,7 +185,8 @@ RUN  \
         --enable-sdl \
         --extra-libs=-lpthread \
         --extra-cflags="-I${PREFIX}/include" \
-        --extra-ldflags="-L${PREFIX}/lib" && \
+        --extra-ldflags="-L${PREFIX}/lib" \
+        --enable libzimg && \
         make && \
         make install && \
         make distclean && \

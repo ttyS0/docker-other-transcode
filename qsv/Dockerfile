@@ -31,7 +31,7 @@ FROM        ubuntu:22.04 AS build
 
 WORKDIR     /tmp/workdir
 
-ENV         FFMPEG_VERSION=5.1.2  \
+ENV         FFMPEG_VERSION=6.0  \
             FDKAAC_VERSION=2.0.2 \
             LIBVA_DRIVER_NAME="iHD" \
             LIBVA_VERSION=2.17.0 \
@@ -86,7 +86,8 @@ RUN     buildDeps="autoconf \
                    libx11-dev \
                    libgl1-mesa-glx \
                    libgl1-mesa-dev \
-                   libsdl2-dev" && \
+                   libsdl2-dev \
+                   libzimg-dev" && \
         apt-get -yqq update && \
         DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${buildDeps}
 
@@ -188,7 +189,8 @@ RUN \
         --enable-sdl \
         --extra-libs=-lpthread \
         --extra-cflags="-I${PREFIX}/include" \
-        --extra-ldflags="-L${PREFIX}/lib" && \
+        --extra-ldflags="-L${PREFIX}/lib" \
+        --enable-libzimg && \
         make && \
         make install && \
         make distclean && \
