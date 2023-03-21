@@ -6,6 +6,7 @@ RUN   runDeps="ca-certificates \
                expat \
                ruby \
                mkvtoolnix \
+               mpv \
                libass9 \
                libfreetype6 \
                libfribidi0 \
