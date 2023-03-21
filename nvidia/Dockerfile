@@ -37,7 +37,7 @@ RUN   runDeps="ca-certificates \
                libfribidi0 \
                locales \
                libfontconfig1 \
-               libzmg2" && \
+               libzimg2" && \
         apt-get -yqq update && \
         DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${runDeps} && \
         apt-get upgrade -y && \
