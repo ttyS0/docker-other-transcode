@@ -26,7 +26,6 @@ WORKDIR     /tmp/workdir
 
 RUN   runDeps="ca-certificates \
                expat \
-               mpv \
                ruby \
                mkvtoolnix \
                libxcb-shape0-dev \
@@ -37,7 +36,8 @@ RUN   runDeps="ca-certificates \
                libfreetype6 \
                libfribidi0 \
                locales \
-               libfontconfig1" && \
+               libfontconfig1 \
+               libzmg2" && \
         apt-get -yqq update && \
         DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${runDeps} && \
         apt-get upgrade -y && \

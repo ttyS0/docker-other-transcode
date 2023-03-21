@@ -17,7 +17,8 @@ RUN   runDeps="ca-certificates \
                libsndio7.0 \
                libxv1 \
                libdrm2 \
-               libfontconfig1" && \
+               libfontconfig1 \
+               libzimg2" && \
         apt-get -yqq update && \
         DEBIAN_FRONTEND="noninteractive" apt-get install -yq --no-install-recommends ${runDeps} && \
         apt-get upgrade -y && \
